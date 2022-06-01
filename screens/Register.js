@@ -1,16 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, TouchableOpacity, TextInput, StyleSheet, Text, View, Alert } from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 
-import {createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../Firebase'
+import { createUserOnRegister } from '../services/Database';
 
-export default function Register({navigation: {navigate}}) {
+export default function Register({navigation}) {
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [loading, setLoading]=useState(false);
 
   const [show, setShow] = useState(false);
 
@@ -20,6 +23,28 @@ export default function Register({navigation: {navigate}}) {
     }, 5000);
     return () => clearTimeout(timeout);
   }, [show]);
+
+  const handleLoginPress = () =>{
+
+    // setLoading(true);
+    // Alert.alert(email+"with password" + password+"logged in" + username)
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredentials) =>{
+            //when successful
+            const user = userCredentials.user;
+
+
+            createUserOnRegister(user, username)
+            // Alert.alert(user.uid);
+            
+            // navigation.replace("Login");
+        })
+        .catch((error)=>{
+            //when failed
+            Alert.alert(error.message);
+        })
+
+  }
 
   return (
     <View style={styles.container}>
@@ -63,9 +88,9 @@ export default function Register({navigation: {navigate}}) {
       />
 
 
-      <TouchableOpacity onPress={() => navigate("Login")} >
+      <TouchableOpacity onPress={handleLoginPress}>
         <View>
-          <Text style={styles.button}>Go to Login</Text>
+          <Text style={styles.button}>Register</Text>
         </View>
       </TouchableOpacity>
 

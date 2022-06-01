@@ -2,6 +2,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import MainStack from './components/MainStack'
+import BetStack from './components/BetStack'
 import LoginStack from './components/LoginStack'
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,8 +12,10 @@ export default function App() {
     //<SafeAreaView>
       <NavigationContainer style={styles.container}>
 
-        <LoginStack/>
+        {/* <LoginStack/> */}
         {/* <MainStack/> */}
+        <BetStack/>
+        
 
       </NavigationContainer>
     //</SafeAreaView>
