@@ -1,5 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Button } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Button, ScrollView } from 'react-native';
+
+import BetCard from '../components/BetCard'
 
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase';
@@ -18,25 +19,25 @@ export default function Home({navigation: {navigate}}) {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.header}>
-        {/* <Text style={styles.headerText}>Home</Text> */}
-        <Button
-          title="sign out"
-          onPress={onSignOutPress}
-          style={styles.signOut}
-          color="#fefefe"
-        />
+        <TouchableOpacity style={styles.signOut} onPress={onSignOutPress}>
+          <Text style={styles.signOutText}>Sign Out</Text>
+        </TouchableOpacity> 
       </SafeAreaView>
 
       <SafeAreaView style={styles.body}>
         <Text style={styles.bodyText}> Available Bets</Text>
-      </SafeAreaView>
 
+        <ScrollView style={styles.betView}>
+          <BetCard isBetMade={false}/>
+        </ScrollView>
+
+      </SafeAreaView>
         <TouchableOpacity style={styles.makeBet} onPress={()=>navigate("Create")}>
           <Text style={styles.makeBetText}>+ Make a Bet</Text>
         </TouchableOpacity> 
 
-      <StatusBar style="auto" />
     </SafeAreaView>
+
   );
 }
 
@@ -59,13 +60,19 @@ const styles = StyleSheet.create({
   },
   signOut: {
     fontSize: 20,
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  signOutText: {
+    color: '#fefefe'
   },
   body: {
     flex: 1,
     width: '100%',
-    alignItems: 'left',
+    paddingTop: 20,
+    // alignItems: 'left',
     justifyContent: 'flex-start',
-    paddingVertical: 20,
     // backgroundColor: '#FF0050',
   },
   bodyText: {
@@ -73,17 +80,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fefefe',
     paddingLeft: 20,
+    paddingBottom: 16,
   },
   makeBet: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    fontWeight: 'bold',
-    backgroundColor: '#fefefe'
+    backgroundColor: '#fefefe',
+    
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.99,
+    shadowRadius: 100,
+
+    elevation: 10,
   },
   makeBetText: {
     fontSize: 24,
     color: '#1a1a1a',
     paddingVertical: 16,
   },
+  betView: {
+    width: '100%',
+    height: 100,
+    // backgroundColor: '#0f0',
+    paddingHorizontal: 16,
+  },
+
 });

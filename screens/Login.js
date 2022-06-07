@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import {  StyleSheet, Text, View, Alert, TextInput, TouchableOpacity, Image } from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
@@ -71,7 +70,6 @@ export default function Login({navigation}) {
         </View>
       </TouchableOpacity>
 
-      <StatusBar style="auto" />
     </View>
   );
 }
@@ -100,8 +98,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     // paddingHorizontal: 11,
     backgroundColor: '#00000000',
-    paddingTop: 10,
-    paddingBottom: 10,          
+    paddingVertical: 10,
     alignContent: 'center',
     justifyContent: 'center',
     alignltems:'center',

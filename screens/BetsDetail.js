@@ -1,20 +1,153 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView} from 'react-native';
+import { useNavigation} from '@react-navigation/native';
 
-export default function BetsDetail() {
+import RequirementButton from '../components/RequirementButton';
+
+export default function BetsDetail({route}) {
+  const navigation = useNavigation(); 
+
+  let isBetMade = route.params.isBetMade;
+
   return (
-    <View style={styles.container}>
-      <Text>BetsDetail</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+
+      <ScrollView style={styles.detailsContainer}>
+
+        <View style={styles.title}>
+          <Text style={styles.titleText}>Go to the highest point in Pretoria</Text>
+        </View>
+
+        <View style={styles.details}>
+          <Text style={styles.detailsText}>Get to the higest point in Pretoria to win this bet.</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+            <View style={styles.info}>
+                <Text style={styles.infoText}>2/1</Text>
+                <Text style={styles.infoTitle}>Odds</Text>
+            </View>
+            <View style={styles.info}>
+                <Text style={styles.infoText}>R20</Text>
+                <Text style={styles.infoTitle}>Min. Wager</Text>
+            </View>
+        </View>
+
+
+        <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 32}}/>
+
+        <View style={styles.requirementContainer}>
+          <Text style={styles.requirementTitle}>Requiremnets</Text>
+          <View style={styles.buttonsContainer}>
+            
+            <RequirementButton title="Speed" icon="speedometer" isActive={false}/>
+            <RequirementButton title="Height" icon="altimeter" isActive={false}/>
+
+          </View>
+        </View>
+
+      </ScrollView>
+
+      {isBetMade ? (
+
+        <TouchableOpacity style={styles.placeBet} onPress={()=>navigation.replace("Home")}>
+          <Text style={styles.placeBetText}>Complete Bet</Text>
+        </TouchableOpacity> 
+
+      ):(
+
+        <TouchableOpacity style={styles.placeBet} onPress={()=>navigation.navigate("Payment")}>
+          <Text style={styles.placeBetText}>Place Bet</Text>
+        </TouchableOpacity> 
+
+      
+
+      )}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1a1a1a',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  detailsContainer: {
+    flex: 1,
+    marginTop: 32,
+    paddingHorizontal: 30,
+  },
+  placeBet: {
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fefefe',
+    
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.99,
+    shadowRadius: 100,
+
+    elevation: 10,
   },
+  placeBetText: {
+    fontSize: 24,
+    color: '#1a1a1a',
+    paddingVertical: 16,
+  },
+  requirementContainer:{
+    flex: 1,
+    justifyContent: 'center',
+  },
+  requirementTitle:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fefefe',
+    paddingHorizontal: 30,
+    paddingTop: 24,
+    paddingBottom: 44,
+    textAlign: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 16,
+    paddingBottom: 32,
+
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  title: {
+    
+  },
+  titleText: {
+    color: '#fefefe',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  details: {
+    marginVertical: 20,
+  },
+  detailsText: {
+    color: '#fefefe',
+    fontSize: 16,
+
+  },
+  info: {
+      paddingHorizontal: 24,
+  },
+  infoText: {
+      fontSize: 48,
+      color: '#fefefe',
+  },
+  infoTitle: {
+      fontSize: 12,
+      color: '#fefefe',
+  },
+
 });
