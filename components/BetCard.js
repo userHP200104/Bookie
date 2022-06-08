@@ -26,7 +26,7 @@ const BetCard = (props) => {
   return (
     <View style={styles.card}>
         <View style={styles.title}>
-            <Text style={styles.titleText}>Climb to the highest point in Pretoria</Text>
+            <Text style={styles.titleText}>{props.betName}</Text>
         </View>
         <View style={styles.info}>
             <View style={styles.odds}>
@@ -34,11 +34,11 @@ const BetCard = (props) => {
                 <Text style={styles.oddsTitle}>Odds</Text>
             </View>
             <View style={styles.wager}>
-                <Text style={styles.wagerText}>R20</Text>
+                <Text style={styles.wagerText}>R{props.wager}</Text>
                 <Text style={styles.wagerTitle}>Min. Wager</Text>
             </View>
         </View>
-            <TouchableOpacity style={styles.action} onPress={()=>navigation.navigate("Detail", {isBetMade: bool})}>
+            <TouchableOpacity style={styles.action} onPress={()=>navigation.navigate("Detail", {isBetMade: bool, betName: props.betName, wager: props.wager, description: props.description})}>
                 <Text style={styles.detailsButton}>tap for details</Text>
             </TouchableOpacity>
     </View>

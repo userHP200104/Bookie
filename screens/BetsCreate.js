@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Button} from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { useNavigation} from '@react-navigation/native';
+import { addBet } from '../services/Database'
+import { auth } from '../Firebase'
 
 import RequirementButton from '../components/RequirementButton';
 
@@ -13,6 +15,22 @@ export default function BetsCreate() {
   const [wager, setWager] = useState('');
   const [description, setDescription] = useState('');
 
+  const createBet = async () => {
+
+    const data ={
+      betName: betName,
+      wager: wager,
+      description: description,
+      available: true,
+      userId: auth.currentUser.uid
+    }
+
+    console.log(data);
+    await addBet(data);
+
+    navigation.replace('Home')
+}
+
   return (
     <SafeAreaView style={styles.container}>
 
@@ -20,7 +38,7 @@ export default function BetsCreate() {
         <FloatingLabelInput
           label={'Bet Name'}
           value={betName}
-          onChangeText={setBetName}
+          onChangeText={(betName) => {setBetName(betName)}}
           inputStyles={{
             color: '#fefefe'
           }}
@@ -31,7 +49,7 @@ export default function BetsCreate() {
         <FloatingLabelInput
           label={'Wager'}
           value={wager}
-          onChangeText={setWager}
+          onChangeText={(wager) => {setWager(wager)}}
           mask="currency"
           currencyDivider="."
           keyboardType="numeric"
@@ -45,7 +63,7 @@ export default function BetsCreate() {
         <FloatingLabelInput
           label={'Description'}
           value={description}
-          onChangeText={setDescription}
+          onChangeText={(description) => {setDescription(description)}}
           inputStyles={{
             color: '#fefefe'
           }}
@@ -70,9 +88,11 @@ export default function BetsCreate() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.makeBet} onPress={()=>navigation.replace("Home")}>
+      {/* <TouchableOpacity style={styles.makeBet}>
           <Text style={styles.makeBetText}>+ Make a Bet</Text>
-      </TouchableOpacity> 
+      </TouchableOpacity>  */}
+
+      <Button title='+ Make Bet' onPress={createBet}/>
     </SafeAreaView>
   );
 }

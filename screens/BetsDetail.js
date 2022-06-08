@@ -8,6 +8,11 @@ export default function BetsDetail({route}) {
   const navigation = useNavigation(); 
 
   let isBetMade = route.params.isBetMade;
+  let betName = route.params.betName;
+  let wager = route.params.wager;
+  let description = route.params.description;
+
+  console.log(route.params)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -15,11 +20,11 @@ export default function BetsDetail({route}) {
       <ScrollView style={styles.detailsContainer}>
 
         <View style={styles.title}>
-          <Text style={styles.titleText}>Go to the highest point in Pretoria</Text>
+          <Text style={styles.titleText}>{betName}</Text>
         </View>
 
         <View style={styles.details}>
-          <Text style={styles.detailsText}>Get to the higest point in Pretoria to win this bet.</Text>
+          <Text style={styles.detailsText}>{description}</Text>
         </View>
 
         <View style={styles.infoContainer}>
@@ -28,7 +33,7 @@ export default function BetsDetail({route}) {
                 <Text style={styles.infoTitle}>Odds</Text>
             </View>
             <View style={styles.info}>
-                <Text style={styles.infoText}>R20</Text>
+                <Text style={styles.infoText}>R{wager}</Text>
                 <Text style={styles.infoTitle}>Min. Wager</Text>
             </View>
         </View>

@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import React from 'react'
+import MapView, { Marker } from 'react-native-maps';
 
 const Location = () => {
   return (
     <View style={styles.container}>
-      <Text style={{color: '#fefefe'}}>Location</Text>
+      <MapView style={styles.map} />
     </View>
   )
 }
@@ -14,8 +15,12 @@ export default Location
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 })

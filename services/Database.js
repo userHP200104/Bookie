@@ -74,3 +74,29 @@ querySnapshot.forEach((doc)=>{
 })
 return projects;
 }
+
+// create a betCount
+export const addBet = (betData) => {
+    return addDoc( collection(db, 'bets'), betData )
+}
+
+// get all availabel bets made
+export const getAllAvailableBets = async () => {
+
+    const availableBets = [];
+    //get snapshot of our users collection
+    const querySnapshot = await getDocs(collection(db, 'bets'));
+
+    //need to loop through snapshot and get each document's data
+    querySnapshot.forEach((doc) => {
+
+        let bet = {...doc.data(), uid: doc.id}
+        if(bet.available == true){
+
+            availableBets.push(bet);
+        }
+    })
+
+    return availableBets;
+
+}
