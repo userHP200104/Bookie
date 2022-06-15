@@ -4,7 +4,7 @@ import { useNavigation} from '@react-navigation/native';
 
 import RequirementButton from '../components/RequirementButton';
 
-export default function BetsDetail({route}) {
+export default function BetsComplete({route}) {
   const navigation = useNavigation(); 
 
   let isBetMade = route.params.isBetMade;
@@ -52,21 +52,9 @@ export default function BetsDetail({route}) {
 
       </ScrollView>
 
-      {isBetMade ? (
-
-        <TouchableOpacity style={styles.placeBet} onPress={()=>navigation.replace("Complete", {betName: betName, wager: wager})}>
-          <Text style={styles.placeBetText}>Complete Bet</Text>
+        <TouchableOpacity style={styles.placeBet} onPress={()=>navigation.navigate("Complete")}>
+          <Text style={styles.placeBetText}>Submit</Text>
         </TouchableOpacity> 
-
-      ):(
-
-        <TouchableOpacity style={styles.placeBet} onPress={()=>navigation.navigate("Payment", {betName: betName, wager: wager})}>
-          <Text style={styles.placeBetText}>Place Bet</Text>
-        </TouchableOpacity> 
-
-      
-
-      )}
     </SafeAreaView>
   );
 }

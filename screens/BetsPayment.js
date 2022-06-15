@@ -1,26 +1,65 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Alert, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { useNavigation } from '@react-navigation/native';
+import RequirementButton from '../components/RequirementButton'
+import { auth } from "../Firebase"; //firestore instance
 
-export default function BetsPayment() {
-  const navigation = useNavigation(); 
+import { makePayment, getCurrentUserMoney } from '../services/Database'
 
-  const [wager, setWager] = useState('0');
+export default function BetsPayment({ route }) {
+  const navigation = useNavigation();
+
+  let betName = route.params.betName;
+  let minWager = route.params.wager;
+
+  const [wager, setWager] = useState(route.params.wager);
+  const [money, setMoney] = useState();
+
+    useEffect(() => {
+      getMoney()
+    })
+
+    const getMoney = async () => {
+      const data = await getCurrentUserMoney();
+      console.log("Data: ", data);
+      setMoney(data);
+    }
+
+    const minWagerCheck = () => {
+      if ((wager >= minWager) && (money >= wager)) {
+        makePayment(wager, { betName: betName, userId: auth.currentUser.uid, wager: wager, isComplete: false }, betName);
+        console.log("minWager", minWager);
+        console.log("wager", wager);
+        console.log("money", money);
+        navigation.replace("Home");
+
+      } else if(wager < minWager){
+        Alert.alert("It seems like you did not bet enough money.");
+        console.log("It seems like you did not bet enough money.");
+        navigation.goBack();
+
+      } else if(money < wager){
+        Alert.alert("It seems like you do not have enough money :(");
+        console.log("It seems like you do not have enough money :(");
+        navigation.goBack();
+      }
+
+  }
 
   return (
     <SafeAreaView style={styles.container}>
 
-        <View style={styles.infoContainer}>
-            <View style={styles.info}>
-                <Text style={styles.infoText}>2/1</Text>
-                <Text style={styles.infoTitle}>Odds</Text>
-            </View>
-            <View style={styles.info}>
-                <Text style={styles.infoText}>R20</Text>
-                <Text style={styles.infoTitle}>Min. Wager</Text>
-            </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.info}>
+          <Text style={styles.infoText}>2/1</Text>
+          <Text style={styles.infoTitle}>Odds</Text>
         </View>
+        <View style={styles.info}>
+          <Text style={styles.infoText}>{minWager}</Text>
+          <Text style={styles.infoTitle}>Min. Wager</Text>
+        </View>
+      </View>
 
       <View style={styles.inputContainer}>
 
@@ -34,12 +73,12 @@ export default function BetsPayment() {
           inputStyles={{
             color: '#fefefe'
           }}
-          customLabelStyles={{leftFocused: -6, colorFocused: '#fefefe', colorBlurred: '#fefefe'}}
+          customLabelStyles={{ leftFocused: -6, colorFocused: '#fefefe', colorBlurred: '#fefefe' }}
           containerStyles={styles.input}
-          />
+        />
 
         {/* <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 20 }}/> */}
-        
+
       </View>
 
       <View style={styles.wagerContainer}>
@@ -49,7 +88,11 @@ export default function BetsPayment() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.payButton} onPress={()=>navigation.replace("Home")}>
+      <TouchableOpacity style={styles.payButton}
+        onPress={
+          () => minWagerCheck()
+        }
+      >
         <Text style={styles.payText}>Pay</Text>
       </TouchableOpacity>
 
@@ -69,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fefefe',
-    
+
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.99,
@@ -96,8 +139,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignContent: 'center',
     justifyContent: 'center',
-    alignltems:'center',
-    zIndex: 993,  
+    alignltems: 'center',
+    zIndex: 993,
     marginBottom: 10,
   },
   infoContainer: {
@@ -107,7 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    
+
   },
   titleText: {
     color: '#fefefe',
@@ -123,37 +166,37 @@ const styles = StyleSheet.create({
 
   },
   info: {
-      paddingHorizontal: 24,
+    paddingHorizontal: 24,
   },
   infoText: {
-      fontSize: 48,
-      color: '#fefefe',
+    fontSize: 48,
+    color: '#fefefe',
   },
   infoTitle: {
-      fontSize: 12,
-      color: '#fefefe',
+    fontSize: 12,
+    color: '#fefefe',
   },
   wagerContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      alignContent: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'center',
     justifyContent: 'center',
-    alignltems:'center',
+    alignltems: 'center',
 
   },
   wager: {
-      justifyContent: 'center',
-      alignltems:'center',
+    justifyContent: 'center',
+    alignltems: 'center',
 
   },
   wagerText: {
-      fontSize: 48,
-      color: '#fefefe',
-      textAlign: 'center',
-    },
-    wagerTitle: {
-      fontSize: 12,
-      color: '#fefefe',
-      textAlign: 'center',
+    fontSize: 48,
+    color: '#fefefe',
+    textAlign: 'center',
+  },
+  wagerTitle: {
+    fontSize: 12,
+    color: '#fefefe',
+    textAlign: 'center',
   },
 });

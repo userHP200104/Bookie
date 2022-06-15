@@ -18,7 +18,7 @@ export default function LoginStack() {
       tabBarIndicatorStyle: { backgroundColor: '#fefefe'},
     }}
     >
-      <Tab.Screen name="Login" component={Login}/>
+      <Tab.Screen name="Login" component={Login} />
       <Tab.Screen name="Register" component={Register} />
   </Tab.Navigator>
   );

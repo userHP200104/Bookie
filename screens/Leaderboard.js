@@ -9,6 +9,7 @@ export default function Leaderboard() {
 
   return (
     <SafeAreaView style={styles.container}>
+
       <Text style={styles.bodyText}>Leaderboard</Text>
 
       <View style={styles.leaderboardTopContainer}>
@@ -28,10 +29,10 @@ export default function Leaderboard() {
 
       <ScrollView>
         {position.map((index) => (
-            <Table position={position[index-1]} username={username[index-1]} betsWon={betsWon[index-1]}/>
+          <Table position={position[index - 1]} username={username[index - 1]} betsWon={betsWon[index - 1]} />
         ))}
       </ScrollView>
-      
+
 
 
     </SafeAreaView>
@@ -48,9 +49,9 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     color: '#fefefe',
+    paddingLeft: 32,
     paddingBottom: 16,
-    paddingTop: 60,
-    paddingHorizontal: 32,
+    paddingTop: 30,
   },
   leaderboardTopContainer: {
     flexDirection: 'row',

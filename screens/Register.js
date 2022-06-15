@@ -7,6 +7,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../Firebase'
 import { createUserOnRegister } from '../services/Database';
 
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 export default function Register({navigation}) {
 
   const [username, setUsername] = useState('');
@@ -77,8 +79,8 @@ export default function Register({navigation}) {
         isPassword
         value={password}
         onChangeText={setPassword}
-        customShowPasswordComponent={<Text style={{color: '#fefefe'}}>Show</Text>}
-        customHidePasswordComponent={<Text style={{color: '#fefefe'}}>Hide</Text>}
+        customShowPasswordComponent={<MaterialCommunityIcons name="eye" color='#fefefe' size={26} />}
+        customHidePasswordComponent={<MaterialCommunityIcons name="eye-off" color='#fefefe' size={26} />}
         inputStyles={{
           color: '#fefefe'
         }}
