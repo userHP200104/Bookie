@@ -4,6 +4,8 @@ import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { signInWithEmailAndPassword} from 'firebase/auth';
 import { auth } from '../Firebase'
 
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 export default function Login({navigation}) {
 
   const [email, setEmail] = useState('');
@@ -54,8 +56,8 @@ export default function Login({navigation}) {
         isPassword
         value={password}
         onChangeText={setPassword}
-        customShowPasswordComponent={<Text style={{color: '#fefefe'}}>Show</Text>}
-        customHidePasswordComponent={<Text style={{color: '#fefefe'}}>Hide</Text>}
+        customShowPasswordComponent={<MaterialCommunityIcons name="eye" color='#fefefe' size={26} />}
+        customHidePasswordComponent={<MaterialCommunityIcons name="eye-off" color='#fefefe' size={26} />}
         inputStyles={{
           color: '#fefefe'
         }}

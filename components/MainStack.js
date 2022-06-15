@@ -60,9 +60,9 @@ return unsubscribe;
             />
             <Tab.Screen name="BetsMade" component={BetsMade}
             options={{
-              tabBarLabel: 'BetsMade',
+              tabBarLabel: 'My Bets',
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="cash" color={color} size={26} />
+                <MaterialCommunityIcons name="handshake" color={color} size={26} />
               ),
             }}
             />
@@ -84,7 +84,7 @@ return unsubscribe;
           tabBarIndicatorStyle: { backgroundColor: '#fefefe'},
         }}
         >
-          <Nav.Screen name="Login" component={Login}/>
+          <Nav.Screen name="Login" component={Login} />
           <Nav.Screen name="Register" component={Register} />
         </Nav.Navigator>
     )}

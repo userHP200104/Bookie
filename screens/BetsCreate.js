@@ -14,6 +14,7 @@ export default function BetsCreate() {
   const [betName, setBetName] = useState('');
   const [wager, setWager] = useState('');
   const [description, setDescription] = useState('');
+  const [allowed, setAllowed] = useState('');
 
   const createBet = async () => {
 
@@ -22,6 +23,7 @@ export default function BetsCreate() {
       wager: wager,
       description: description,
       available: true,
+      peoplAllowed: allowed,
       userId: auth.currentUser.uid
     }
 
@@ -71,6 +73,18 @@ export default function BetsCreate() {
           containerStyles={styles.input}
           />
 
+        <FloatingLabelInput
+          label={'People Allowed to Bet'}
+          value={allowed}
+          onChangeText={(allowed) => {setAllowed(allowed)}}
+          keyboardType="numeric"
+          inputStyles={{
+            color: '#fefefe'
+          }}
+          customLabelStyles={{leftFocused: -6, colorFocused: '#fefefe', colorBlurred: '#fefefe'}}
+          containerStyles={styles.input}
+          />
+
         <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 20 }}/>
         
       </View>
@@ -83,16 +97,16 @@ export default function BetsCreate() {
           <RequirementButton title="Speed" icon="speedometer" isActive={false}/>
           <RequirementButton title="Height" icon="altimeter" isActive={false}/>
           <RequirementButton title="Location" icon="map-marker" isActive={false}/>
-          <RequirementButton title="NFC" icon="nfc" isActive={false}/>
+          <RequirementButton title="Camera" icon="camera" isActive={false}/>
 
         </View>
       </View>
 
-      {/* <TouchableOpacity style={styles.makeBet}>
+      <TouchableOpacity style={styles.makeBet} onPress={createBet}>
           <Text style={styles.makeBetText}>+ Make a Bet</Text>
-      </TouchableOpacity>  */}
+      </TouchableOpacity> 
 
-      <Button title='+ Make Bet' onPress={createBet}/>
+      {/* <Button title='+ Make Bet' onPress={createBet}/> */}
     </SafeAreaView>
   );
 }

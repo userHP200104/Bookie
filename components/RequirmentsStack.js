@@ -8,6 +8,7 @@ import Speed from '../screens/requirements/Speed';
 import Height from '../screens/requirements/Height';
 import Location from '../screens/requirements/Location';
 import NFC from '../screens/requirements/NFC';
+import Camera from '../screens/requirements/Camera';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,14 +23,15 @@ export default function BetStack() {
       name="BetsCreate"
       component={BetsCreate}
         options={{
-          title: 'Make a Bet',
-          headerStyle: {
-            backgroundColor: '#1a1a1a',
-          },
-          headerTintColor: '#fefefe',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+          headerShown: false,
+          // title: 'Make a Bet',
+          // headerStyle: {
+          //   backgroundColor: '#1a1a1a',
+          // },
+          // headerTintColor: '#fefefe',
+          // headerTitleStyle: {
+          //   fontWeight: 'bold',
+          // },
         }}
       />
       <Stack.Screen 
@@ -79,6 +81,20 @@ export default function BetStack() {
           component={NFC}
           options={{
             title: 'Set Location',
+            headerStyle: {
+              backgroundColor: '#1a1a1a',
+            },
+            headerTintColor: '#fefefe',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+          />
+        <Stack.Screen
+          name="Camera"
+          component={Camera}
+          options={{
+            title: 'Upload an Image or Video',
             headerStyle: {
               backgroundColor: '#1a1a1a',
             },
