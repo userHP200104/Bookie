@@ -85,12 +85,12 @@ export default function BetsCreate() {
           containerStyles={styles.input}
           />
 
-        <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 20 }}/>
+        {/* <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 20 }}/> */}
         
       </View>
 
 
-      <View style={styles.requirementContainer}>
+      {/* <View style={styles.requirementContainer}>
         <Text style={styles.requirementTitle}>Select Bet Requiremnets</Text>
         <View style={styles.buttonsContainer}>
           
@@ -100,7 +100,7 @@ export default function BetsCreate() {
           <RequirementButton title="Camera" icon="camera" isActive={false}/>
 
         </View>
-      </View>
+      </View> */}
 
       <TouchableOpacity style={styles.makeBet} onPress={createBet}>
           <Text style={styles.makeBetText}>+ Make a Bet</Text>
@@ -120,8 +120,10 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    marginTop: 32,
+    // marginTop: 32,
     paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   input: {
     flexDirection: 'row',
