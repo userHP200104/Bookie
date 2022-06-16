@@ -1,60 +1,102 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView} from 'react-native';
-import { useNavigation} from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { addImageToBet } from '../services/Database'
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import RequirementButton from '../components/RequirementButton';
+import { async } from '@firebase/util';
 
-export default function BetsComplete({route}) {
-  const navigation = useNavigation(); 
+export default function BetsComplete({ route }) {
+  const navigation = useNavigation();
 
   let isBetMade = route.params.isBetMade;
   let betName = route.params.betName;
   let wager = route.params.wager;
   let description = route.params.description;
+  let imageUri = route.params.image;
+  let imageTaken = route.params.imageTaken;
+
+  let data = [betName, wager];
 
   console.log(route.params)
+
+  const [isUploaded, setIsUploaded] = useState(false);
+
+  useEffect(() => {
+    if(isUploaded){
+      navigation.replace("Home");
+    }
+  }, [isUploaded])
+  
+  
+  const saveImage = async () => {
+    const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+    const storage = getStorage();
+    const imageRef = ref(storage, filename);
+    
+    // convert image to arrray of bytes
+    const img = await fetch(imageUri);
+    const bytes = await img.blob();
+    
+    await uploadBytes(imageRef, bytes);
+    console.log("image uploaded!!!")
+    // addImageToBet(filename, betName);
+
+    setIsUploaded(true);
+
+  }
+
+
 
   return (
     <SafeAreaView style={styles.container}>
 
-      <ScrollView style={styles.detailsContainer}>
+      {imageTaken ? (
+        <View style={styles.container}>
+          <Image source={{ uri: imageUri, width: '100%', height: 100 }} style={styles.container} />
+          {/* <TouchableOpacity style={styles.placeBet} onPress={saveImage}> */}
+          <TouchableOpacity style={styles.placeBet} onPress={saveImage}>
+            <Text style={styles.placeBetText}>Submit</Text>
+          </TouchableOpacity>
 
-        <View style={styles.title}>
-          <Text style={styles.titleText}>{betName}</Text>
         </View>
+      ) : (
+        <ScrollView style={styles.detailsContainer}>
 
-        <View style={styles.details}>
-          <Text style={styles.detailsText}>{description}</Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-            <View style={styles.info}>
-                <Text style={styles.infoText}>2/1</Text>
-                <Text style={styles.infoTitle}>Odds</Text>
-            </View>
-            <View style={styles.info}>
-                <Text style={styles.infoText}>R{wager}</Text>
-                <Text style={styles.infoTitle}>Min. Wager</Text>
-            </View>
-        </View>
-
-
-        <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 32}}/>
-
-        <View style={styles.requirementContainer}>
-          <Text style={styles.requirementTitle}>Requiremnets</Text>
-          <View style={styles.buttonsContainer}>
-            
-            <RequirementButton title="Camera" icon="camera" isActive={false}/>
-
+          <View style={styles.title}>
+            <Text style={styles.titleText}>{betName}</Text>
           </View>
-        </View>
 
-      </ScrollView>
+          <View style={styles.details}>
+            <Text style={styles.detailsText}>{description}</Text>
+          </View>
 
-        <TouchableOpacity style={styles.placeBet} onPress={()=>navigation.navigate("Complete")}>
-          <Text style={styles.placeBetText}>Submit</Text>
-        </TouchableOpacity> 
+          <View style={styles.infoContainer}>
+            <View style={styles.info}>
+              <Text style={styles.infoText}>2/1</Text>
+              <Text style={styles.infoTitle}>Odds</Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.infoText}>R{wager}</Text>
+              <Text style={styles.infoTitle}>Min. Wager</Text>
+            </View>
+          </View>
+
+
+          <View style={{ borderBottomColor: '#FF005050', borderBottomWidth: 1, marginTop: 32 }} />
+
+          <View style={styles.requirementContainer}>
+            <Text style={styles.requirementTitle}>Take a Picture</Text>
+            <View style={styles.buttonsContainer}>
+
+              <RequirementButton title="Camera" route="CameraScreen" icon="camera" isActive={false} data={data} />
+
+            </View>
+          </View>
+
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -76,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fefefe',
-    
+
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.99,
@@ -89,11 +131,11 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
     paddingVertical: 16,
   },
-  requirementContainer:{
+  requirementContainer: {
     flex: 1,
     justifyContent: 'center',
   },
-  requirementTitle:{
+  requirementTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fefefe',
@@ -115,7 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    
+
   },
   titleText: {
     color: '#fefefe',
@@ -131,15 +173,15 @@ const styles = StyleSheet.create({
 
   },
   info: {
-      paddingHorizontal: 24,
+    paddingHorizontal: 24,
   },
   infoText: {
-      fontSize: 48,
-      color: '#fefefe',
+    fontSize: 48,
+    color: '#fefefe',
   },
   infoTitle: {
-      fontSize: 12,
-      color: '#fefefe',
+    fontSize: 12,
+    color: '#fefefe',
   },
 
 });

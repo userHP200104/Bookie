@@ -16,7 +16,7 @@ const Money = () => {
 
     const getMoney = async () => {
         const data = await getCurrentUserMoney();
-        console.log("Data: ", data);
+        // console.log("Data: ", data);
         setMoney(data);
     }
 

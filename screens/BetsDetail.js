@@ -17,7 +17,7 @@ export default function BetsDetail({route}) {
   return (
     <SafeAreaView style={styles.container}>
 
-      <ScrollView style={styles.detailsContainer}>
+      <SafeAreaView style={styles.detailsContainer}>
 
         <View style={styles.title}>
           <Text style={styles.titleText}>{betName}</Text>
@@ -38,19 +38,7 @@ export default function BetsDetail({route}) {
             </View>
         </View>
 
-
-        <View style={{ borderBottomColor: '#FF005050',borderBottomWidth: 1, marginTop: 32}}/>
-
-        <View style={styles.requirementContainer}>
-          <Text style={styles.requirementTitle}>Requiremnets</Text>
-          <View style={styles.buttonsContainer}>
-            
-            <RequirementButton title="Camera" icon="camera" isActive={false}/>
-
-          </View>
-        </View>
-
-      </ScrollView>
+      </SafeAreaView>
 
       {isBetMade ? (
 
@@ -80,8 +68,10 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
-    marginTop: 32,
+    // marginTop: 32,
     paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   placeBet: {
     width: '100%',

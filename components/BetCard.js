@@ -1,9 +1,10 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
 const BetCard = (props) => {
-    const navigation = useNavigation(); 
+    const navigation = useNavigation();
 
     let bool = props.isBetMade;
 
@@ -15,7 +16,7 @@ const BetCard = (props) => {
     //     setBetCount(count++);
     //     console.log(betCount);
     // }
-    
+
     // const decreaseBetCount = () => {
     //     let count = betCount;
     //     console.log(betCount);
@@ -23,38 +24,41 @@ const BetCard = (props) => {
     //     console.log(betCount);
     // }
 
-  return (
-    <View style={styles.card}>
-        <View style={styles.title}>
-            <Text style={styles.titleText}>{props.betName}</Text>
-        </View>
-        <View style={styles.info}>
-            <View style={styles.odds}>
-                <Text style={styles.oddsText}>2/1</Text>
-                <Text style={styles.oddsTitle}>Odds</Text>
+    return (
+        <View style={styles.card}>
+            <View style={styles.title}>
+                <Text style={styles.titleText}>{props.betName}</Text>
             </View>
-            <View style={styles.wager}>
-                <Text style={styles.wagerText}>R{props.wager}</Text>
-                <Text style={styles.wagerTitle}>Min. Wager</Text>
+            <View style={styles.info}>
+                <View style={styles.odds}>
+                    <Text style={styles.oddsText}>2/1</Text>
+                    <Text style={styles.oddsTitle}>Odds</Text>
+                </View>
+                <View style={styles.wager}>
+                    <Text style={styles.wagerText}>
+                        <MaterialCommunityIcons name='cash' color='#1a1a1a' size={20} style={{alignItems: 'center', justifyContent: 'center'}} />
+                        {props.wager}
+                    </Text>
+                    <Text style={styles.wagerTitle}>Min. Wager</Text>
+                </View>
             </View>
-        </View>
-            <TouchableOpacity style={styles.action} onPress={()=>navigation.navigate("Detail", {isBetMade: bool, betName: props.betName, wager: props.wager, description: props.description})}>
+            <TouchableOpacity style={styles.action} onPress={() => navigation.navigate("Detail", { isBetMade: bool, betName: props.betName, wager: props.wager, description: props.description })}>
                 <Text style={styles.detailsButton}>tap for details</Text>
             </TouchableOpacity>
-    </View>
-  )
+        </View>
+    )
 }
 
 export default BetCard
 
 const styles = StyleSheet.create({
-    card: { 
+    card: {
         width: '100%',
         backgroundColor: '#1a1a1a',
         borderColor: '#fefefe',
         borderWidth: 1,
         marginBottom: 24,
-        
+
     },
     title: {
         backgroundColor: '#fefefe'
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     wagerText: {
-        fontSize: 32,
+        fontSize: 24,
         color: '#1a1a1a',
     },
     wagerTitle: {

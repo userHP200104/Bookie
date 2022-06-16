@@ -8,7 +8,7 @@ import Speed from '../screens/requirements/Speed';
 import Height from '../screens/requirements/Height';
 import Location from '../screens/requirements/Location';
 import NFC from '../screens/requirements/NFC';
-import Camera from '../screens/requirements/Camera';
+import CameraScreen from '../screens/requirements/Camera';
 
 
 const Stack = createNativeStackNavigator();
@@ -91,10 +91,10 @@ export default function BetStack() {
           }}
           />
         <Stack.Screen
-          name="Camera"
-          component={Camera}
+          name="CameraScreen"
+          component={CameraScreen}
           options={{
-            title: 'Upload an Image or Video',
+            title: 'Take a Picture',
             headerStyle: {
               backgroundColor: '#1a1a1a',
             },

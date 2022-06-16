@@ -8,7 +8,7 @@ import Create from '../screens/BetsCreate'
 import Detail from '../screens/BetsDetail'
 import Payment from '../screens/BetsPayment'
 import Complete from '../screens/BetsComplete'
-import Camera from '../screens/requirements/Camera'
+import CameraScreen from '../screens/requirements/Camera'
 
 import MainStack from '../components/MainStack'
 import Money from '../components/Money'
@@ -155,8 +155,8 @@ export default function BetStack() {
         }}
       />  
       <Stack.Screen
-        name="Camera"
-        component={Camera}
+        name="CameraScreen"
+        component={CameraScreen}
         options={{
           title: 'Upload an Image or Video',
           headerStyle: {

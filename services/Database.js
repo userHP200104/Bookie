@@ -2,6 +2,7 @@
 import { db, auth } from "../Firebase"; //firestore instance
 //firestore functions
 import { doc, setDoc, Timestamp, collection, getDocs, getDoc, addDoc, query, onSnapshot, where } from "firebase/firestore";
+import { getStorage, ref } from "firebase/storage";
 
 //creates a document for the user in our users collection
 export const createUserOnRegister = (user, username) => {
@@ -147,5 +148,32 @@ export const changeBetAvailability = async (betName) => {
 
     setDoc(betRef, { available: false }, { merge: true });
     console.log("Not Available!!");
+
+}
+
+export const addImageToBet = async (imageName, betName) => {
+
+    const id = auth.currentUser.uid;
+    
+    let betId = 0;
+    
+    console.log("Test addImageToBet", imageName, id, betName, betid);
+
+    const q = query(collection(db, "bets"), where("betName", "==", betName));
+    
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        betId = doc.id;
+    });
+
+    const collectionRef = collection(db, 'users/' + id + '/image');   
+    
+    console.log("added to collection")
+
+    return addDoc(collectionRef, {imageName: imageName, betName: betName, betId: betId});
+
+
 
 }
